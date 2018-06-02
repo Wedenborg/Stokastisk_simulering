@@ -41,15 +41,15 @@ L = 1:length(L)
 
 for ( i in 1:length(FF)){
   if (F[i]>=1) {
-    G[i] = FF[i]
+    G[i] = i
   } else {
-    S[i] = FF[i]
+    S[i] = i
   }
 }
 G = G[!is.na(G)]
 S = S[!is.na(S)]
 
-while (length(S)>1){
+while (length(S)>0){
   k = G[1]
   j = S[1]
   L[j] = k
