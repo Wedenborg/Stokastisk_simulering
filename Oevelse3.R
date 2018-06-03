@@ -26,3 +26,11 @@ plot(TT)
 hist(FF)
 
 #Pareto
+beta = 1 # Hvad er beta og k??
+k = 2.05
+Fpar = 1-(beta/U)^k
+hist(Fpar)
+plot(Fpar)
+
+# Normal
+
