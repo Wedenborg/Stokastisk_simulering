@@ -61,3 +61,5 @@ while (length(S)>0){
     S = S[!S %in% j]
   }
 }
+
+# Rejection method
