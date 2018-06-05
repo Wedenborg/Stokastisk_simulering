@@ -14,7 +14,7 @@ ServiceUnits = 10
 
 CustomerSimulation = function(traffic,ServiceUnits){
   # Generate U
-  N.iter = 100000
+  N.iter = 200000
   X = vector('numeric', N.iter)
   U = vector('numeric', N.iter)
   M = 10^8
