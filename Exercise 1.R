@@ -8,7 +8,7 @@ U =  vector('numeric',N)
 X[1] = 3#2
 a =110
 c = 11
-M = 16345
+M = 1637
 U[1] = X[1]/M
 for (i in 2:N){
   X[i] =  (a*X[i-1]+c)%%M
@@ -36,6 +36,9 @@ pValue = 1 - pchisq(TestStatistic, df=10-1-3) # = 2.086298e-06
 
 
 ## Correlation test 
+
+library(ggplot2)
+
 ch = vector('numeric',9000)
 for (i in 1:9000){ # Udregner for 300 
   Uhead = head(U,-i)
@@ -113,10 +116,21 @@ A = matrix(
   nrow=6, 
   ncol=6)
 Z = 1/(N-6)*dot(t((R-N*B)),dot(A,(R-N*B)))  # Regner test statistics
-pValue = 1 - pchisq(Z, df=6-1-3)  # FOR IKKE NOGET RIGTIGT 
+pValue = 1 - pchisq(Z, df=6)  # df er lig med n, fundet i Villy s. 79
 ## Kolmogorov-Smirnov test 
 plot(ecdf(X), verticals=TRUE)
 plot(ecdf(U), verticals=TRUE)
+
+Dn = 0
+U_ECDF = ecdf(U)
+for ( i in 1:length(U)){
+    Dn = Dn + abs(U_ECDF(U[i])-U[i])
+}
+Dn/N
+abs(U_ECDF(1)-)
+ks.test(U, 'punif',0,1)
+
+# regn support
 
 ## Scatter plot
 UScatterHead = head(U,-1)

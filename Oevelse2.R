@@ -1,25 +1,14 @@
-#??VELSE 2
-# Implementing LCG
-N = 10000
-UX = runif(N,0,1)
-X = vector('numeric',N)
-U =  vector('numeric',N)
-X[1] = 3#2
-a =110
-c = 11
-M = 1637
-U[1] = X[1]/M
-for (i in 2:N){
-  X[i] =  (a*X[i-1]+c)%%M
-  U[i] = X[i]/M
-}
+### OEVELSE 2
+
+U=runif(10000,0,1)
+X = (log(U)/log(1-1/3))+1
+hist(X)
 
 
--
 
 # crude
 p = c(7/48,5/48,1/8,1/16,1/4,5/16)
-X = vector('numeric',6)
+X_crude = vector('numeric',6)
 p1 = sum(p[1])
 p2 = sum(p[1:2])
 p3= sum(p[1:3])
@@ -30,20 +19,20 @@ p6 = sum(p[1:6])
 
 for ( i in 1:length(U)){
   if (U[i]<=p1){
-    X[i]=1
+    X_crude[i]=1
   } else if (U[i]<=p2){
-    X[i]=2
+    X_crude[i]=2
   } else if (U[i]<=p3){
-    X[i]=3
+    X_crude[i]=3
   } else if (U[i]<=p4){
-    X[i]=4
+    X_crude[i]=4
   } else if (U[i]<=p5){
-    X[i]=5
+    X_crude[i]=5
   } else if (U[i]<=p6){
-    X[i]=6
+    X_crude[i]=6
   }
 }
-hist(X)
+hist(X_crude)
 # regn de funde % ud 
 
 ## Alias method
@@ -67,14 +56,38 @@ while (length(S)>0){
   k = G[1]
   j = S[1]
   L[j] = k
-  FF[k] = k-(1-j)
+  FF[k] = FF[k]-(1-FF[j])
   if (FF[k]<1){
-    G = G[!G %in% 1]
+    G = G[!G %in% k]
     S = c(S,k)
   } else {
     S = S[!S %in% j]
   }
 }
+print(FF)
+print(L)
 
 # Rejection method
-pt(0.1,1)
+
+X = vector()
+Y = ceiling(runif(10000,0,6))
+U = runif(10000,0,1)
+
+q = c(1/6,1/6,1/6,1/6,1/6,1/6)
+C = max (p/q)
+
+for (i in 1:10000){
+  J = Y[i]
+  if (U[i] < p[J]/(q[J]*C)){
+    X = c(X,Y[i])
+  }
+}
+Freq_of_output = length(X)/10000
+
+X_Rejection = X
+hist(X_Rejection)
+
+
+### Test if Crude and Rejection are the same
+
+t.test(X_crude,X_Rejection) # we can't reject H_0

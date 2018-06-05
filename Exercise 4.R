@@ -64,9 +64,11 @@ CustomerSimulation = function(traffic,ServiceUnits){
         }
       }
       
-      S[S== Inf] = 100000000000
-      S[S== NA] = 0
-      if (min(S[S!=0])< Next_customer){ # Vi s??tter clock til n??ste gang der kommer en event.
+
+      if(sum(S)==0){
+        clock = Next_customer
+      }
+       else if (min(S[S!=0])< Next_customer){ # Vi s??tter clock til n??ste gang der kommer en event.
         clock =  min(S[S!=0])
       } else{
         clock =  Next_customer
