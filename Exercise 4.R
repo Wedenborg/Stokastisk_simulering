@@ -80,9 +80,10 @@ X_customer = vector()
         }
       }
 
-      S[is.infinite(S)] = 100000000000
-      S[is.na(S)] = 1
-      if (min(S[S!=0])< Next_customer){ # Vi s??tter clock til n??ste gang der kommer en event.
+      if(sum(S)==0){
+        clock = Next_customer
+      }
+       else if (min(S[S!=0])< Next_customer){ # Vi s??tter clock til n??ste gang der kommer en event.
         clock =  min(S[S!=0])
       } else{
         clock =  Next_customer
