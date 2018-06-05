@@ -12,9 +12,11 @@
 traffic =1/8
 ServiceUnits = 10
 
-CustomerSimulation = function(traffic,ServiceUnits){
+
+#CustomerSimulation = function(traffic,ServiceUnits){
   # Generate U
-  N.iter = 2000
+
+  N.iter = 320000
   X = vector('numeric', N.iter)
   U = vector('numeric', N.iter)
   M = 10^8
@@ -53,6 +55,9 @@ X_customer = vector()
 
   ###
 
+
+  indkoersel = 6000
+
   N = 10000
   a = 0
   RejectionRate = vector()
@@ -62,9 +67,17 @@ X_customer = vector()
     S = vector('numeric',ServiceUnits)
     clock = 1
     Next_customer = 1
-
     while (Customers < N){
       a = a+1
+      if (any(S == clock)){ # er svare clock til at i kunder er serviceret
+
+    while (Customers < N+indkoersel){
+      a=a+1
+      if(Customers == indkoersel){ # Indkoersel
+        Start_customer = Customers
+        Start_B = B
+      }
+
       if (any(S == clock)){ # er svare clock til at i kunder er serviceret
         S[S==clock] = 0 # vi laver en tom plads
 
@@ -90,8 +103,11 @@ X_customer = vector()
       }
 
     }
-    RejectionRate[i] = B/N
+    RejectionRate[i] = (B-Start_B)/(Customers-Start_customer)
   }
 
   return(print(mean(RejectionRate)))
 }
+
+#  return(print(mean(RejectionRate)))
+#}

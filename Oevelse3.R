@@ -159,6 +159,7 @@ lines(0:20, dpareto(0:20,min(x),3), type="h", col="red")
 Conf = matrix( 
   nrow=100, 
   ncol=2)
+
 for (i in 1:100){
   b = a+10
   sample = TFinal[a:b]
