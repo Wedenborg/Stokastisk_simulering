@@ -1,8 +1,21 @@
-#ØVELSE 2
+#??VELSE 2
+# Implementing LCG
+N = 10000
+UX = runif(N,0,1)
+X = vector('numeric',N)
+U =  vector('numeric',N)
+X[1] = 3#2
+a =110
+c = 11
+M = 1637
+U[1] = X[1]/M
+for (i in 2:N){
+  X[i] =  (a*X[i-1]+c)%%M
+  U[i] = X[i]/M
+}
 
-U = runif(n = 10000,0,1)
-#U = rgeom(10000,0.3)
-hist(U)
+
+-
 
 # crude
 p = c(7/48,5/48,1/8,1/16,1/4,5/16)
@@ -31,16 +44,17 @@ for ( i in 1:length(U)){
   }
 }
 hist(X)
+# regn de funde % ud 
 
-# Alias method
-FF = (6+1)*p
+## Alias method
+FF = (6)*p
 L = vector('numeric',6)
 G = vector()
 S = vector()
 L = 1:length(L)
 
 for ( i in 1:length(FF)){
-  if (F[i]>=1) {
+  if (FF[i]>=1) {
     G[i] = i
   } else {
     S[i] = i
@@ -63,4 +77,4 @@ while (length(S)>0){
 }
 
 # Rejection method
-
+pt(0.1,1)
