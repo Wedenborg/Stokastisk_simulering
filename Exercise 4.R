@@ -1,13 +1,17 @@
 ### EXercise 4
-N = 10000 # Number og customers
-S = vector('numeric',8)
+### 
+### Noter:
+### Simulationen skal k??rer lidt tid f??r vi begynder at m??le. 
+### Hvordan passer Rejection Rate med den teoretiske, som er opgivet p?? sidste slide
+### 
+### Benyt den eksponentiele fordeling vi selv har lavet.
+### 
+### Det st??r vi skal lave et program der tager offered traffic??? og antal service unit som input
+### Output for denne funktion skal formegentligt v??re rejection rate
 
-B = 0
-1267/10000
-Customers = 0
-Customer = T
-clock = 1
-Next_customer = 1
+
+N = 10000 # Number og customers
+
 RejectionRate = vector()
 for (i in 1:10){
   B = 0
@@ -24,7 +28,7 @@ for (i in 1:10){
     }
     
     if (Next_customer == clock){ # svare event til at der kommer en ny kunde
-      Next_customer = clock + rexp(1,1) # Tiden for hvornår næste kunde kommer beregnes
+      Next_customer = clock + rexp(1,1) # Tiden for hvorn??r n??ste kunde kommer beregnes
       if (any(S == 0)){ # Hvis der er en tom plads beregnes tiden for hvor langt tid det tager at ekpiderer kunder der tager denne tomme plads
         S[S==0][1] = rexp(1,1/8) + clock
       } else { # hvis der ikke er en tom plads bliver kunden blockerer og ender i B
@@ -32,7 +36,7 @@ for (i in 1:10){
       }
     }
   
-    if (min(S[S!=0])< Next_customer){ # Vi sætter clock til næste gang der kommer en event.
+    if (min(S[S!=0])< Next_customer){ # Vi s??tter clock til n??ste gang der kommer en event.
       clock =  min(S[S!=0])
     } else{
       clock =  Next_customer
@@ -41,3 +45,4 @@ for (i in 1:10){
   }
   RejectionRate[i] = B/N
 }
+

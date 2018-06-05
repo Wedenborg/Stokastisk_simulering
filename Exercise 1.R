@@ -108,13 +108,12 @@ B = vector('numeric',6)
 B = c(1/6,5/24,11/120,19/720,29/5040,1/840)
 #B = t(B)
 #R= t(R)
-U = UX
 A = matrix( 
   c(4529.4, 9044.9, 13568, 18091, 22615, 27892,9044.9,18097,27139,36187,45234,55789,13568,27139,40721,54281,67852,83685,18091,36187,54281,72414,90470,111580,22615,45234,67852,90470,113262,139476,27892,55789,83685,111580,139476,172860), 
   nrow=6, 
   ncol=6)
 Z = 1/(N-6)*dot(t((R-N*B)),dot(A,(R-N*B)))  # Regner test statistics
-pValue = 1 - pchisq(Z, df=6-1) 
+pValue = 1 - pchisq(Z, df=6-1-3)  # FOR IKKE NOGET RIGTIGT 
 ## Kolmogorov-Smirnov test 
 plot(ecdf(X), verticals=TRUE)
 plot(ecdf(U), verticals=TRUE)
