@@ -33,9 +33,10 @@ for ( i in 1:length(U)){
   }
 }
 hist(X_crude)
-# regn de funde % ud 
+# regn de funde % ud
 
 ## Alias method
+p = c(7/48,5/48,1/8,1/16,1/4,5/16)
 FF = (6)*p
 L = vector('numeric',6)
 G = vector()
@@ -67,6 +68,23 @@ while (length(S)>0){
 print(FF)
 print(L)
 
+U = runif(20002, 0,1)
+n =6
+X_alias = vector()
+N = length(U)
+U1 = U[seq(1,N,2)]
+U2 = U[seq(2,N,2)]
+N.iter = length(U)/2-1
+for ( i in 1:N.iter){
+  II = ceiling(n*U1[i])
+  if (U2[i+1]<=FF[II]){
+    X_alias[i] = II
+  } else {
+    X_alias[i] = L[II]
+  }
+}
+
+hist(X_alias)
 # Rejection method
 
 X = vector()
@@ -88,6 +106,9 @@ X_Rejection = X
 hist(X_Rejection)
 
 
+
 ### Test if Crude and Rejection are the same
 
 t.test(X_crude,X_Rejection) # we can't reject H_0
+t.test(X_crude,X_alias) # we can't reject H_0
+t.test(X_alias,X_Rejection) # we can't reject H_0
