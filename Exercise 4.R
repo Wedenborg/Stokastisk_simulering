@@ -9,12 +9,12 @@
 ### Det st??r vi skal lave et program der tager offered traffic??? og antal service unit som input
 ### Output for denne funktion skal formegentligt v??re rejection rate
 
-# traffic =1/8
-# ServiceUnits = 10
+ traffic =1/8
+ ServiceUnits = 10
 
 
 
-CustomerSimulation = function(traffic,ServiceUnits){
+# CustomerSimulation = function(traffic,ServiceUnits){
   # Generate U
   
   N.iter = 320000
@@ -36,11 +36,16 @@ CustomerSimulation = function(traffic,ServiceUnits){
   X_service = X_service[!is.na(X_service)]
   
   
+  ######################
+  #Choose your distribution
+  
   ## Exponential
-  lambda = 1
-  X_customer = -log(U)/lambda
+  # lambda = 1
+  # X_customer = -log(U)/lambda
+  
   # ## Erlang
-  # k= 8
+  # lambda = 1
+  # k= 1
   # D = length(U)/k
   # a = 1
   # X_customer = vector()
@@ -51,20 +56,23 @@ CustomerSimulation = function(traffic,ServiceUnits){
   # }
   
   # ## Hyper exponential
-  # lambda1 = 0.8333
-  # lambda2 = 5.0
-  # prob1 = 0.8
-  # prob2 = 0.2
-  # 
-  # X_customer = prob1*(-log(U)/lambda1)+prob2*(-log(U)/lambda2)
-  # hist(X_customer)
-  # 
-  # X_customer = X_customer[is.finite(X_customer)]
-  # X_customer = X_customer[!is.na(X_customer)]
-  # 
-  
-  
-  
+#   lambda1 = 0.8333
+#   lambda2 = 5.0
+#   prob1 = 0.8
+#   prob2 = 0.2
+# 
+#   X_customer = prob1*(-log(U)/lambda1)+prob2*(-log(U)/lambda2)
+# #  hist(X_customer)
+
+  # ## Pareto
+  # beta = 1 # Hvad er beta og k??
+  # k = 2.05
+  # X_customer = beta*(U^(-1/k))
+   
+  ##
+  X_customer = X_customer[is.finite(X_customer)]
+  X_customer = X_customer[!is.na(X_customer)]
+  ##
   
   ###
   
@@ -122,8 +130,9 @@ CustomerSimulation = function(traffic,ServiceUnits){
   
   conf_above = avg + qt(0.975, df = 9) * sd(RejectionRate) / sqrt(Customers-Start_customer)
   output = c(avg,conf_under,conf_above )
-  return(print(output))
-}
+  
+#   return(print(output))
+# }
 
 
 
