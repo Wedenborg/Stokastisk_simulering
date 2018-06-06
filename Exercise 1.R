@@ -124,10 +124,10 @@ plot(ecdf(U), verticals=TRUE)
 Dn = 0
 U_ECDF = ecdf(U)
 for ( i in 1:length(U)){
-    Dn = Dn + abs(U_ECDF(U[i])-U[i])
+    Dn[i] =  abs(U_ECDF(U[i])-U[i])
 }
-Dn/N
-abs(U_ECDF(1)-)
+max(Dn)
+
 ks.test(U, 'punif',0,1)
 
 # regn support
