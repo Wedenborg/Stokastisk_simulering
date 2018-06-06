@@ -50,8 +50,16 @@ X_customer = -log(U)/lambda
 # }
 
 # ## Hyper exponential
-# X_customer = X_customer[is.finite(X_customer)]
-# X_customer = X_customer[!is.na(X_customer)]
+lambda1 = 0.8333
+lambda2 = 5.0
+prob1 = 0.8
+prob2 = 0.2
+
+X_customer = prob1*(-log(U)/lambda1)+prob2*(-log(U)/lambda2)
+hist(X_customer)
+
+X_customer = X_customer[is.finite(X_customer)]
+X_customer = X_customer[!is.na(X_customer)]
 
 
 
@@ -71,19 +79,19 @@ for (i in 1:10){
   Next_customer = 1
   while (Customers < N){
     a = a+1
-      
+
       while (Customers < N+indkoersel){
         a=a+1
         if(Customers == indkoersel){ # Indkoersel
           Start_customer = Customers
           Start_B = B
         }
-        
+
         if (any(S == clock)){ # er svare clock til at i kunder er serviceret
           S[S==clock] = 0 # vi laver en tom plads
-          
+
         }
-        
+
         if (Next_customer == clock){ # svare event til at der kommer en ny kunde
           Customers = Customers + 1
           Next_customer = clock + X_customer[a] # Tiden for hvorn??r n??ste kunde kommer beregnes
@@ -93,7 +101,7 @@ for (i in 1:10){
             B = B+1
           }
         }
-        
+
         if(sum(S)==0){
           clock = Next_customer
         }
@@ -102,12 +110,11 @@ for (i in 1:10){
         } else{
           clock =  Next_customer
         }
-        
+
       }
       RejectionRate[i] = (B-Start_B)/(Customers-Start_customer)
     }
-    
+
     return(print(mean(RejectionRate)))
   }
-  
-  
+
