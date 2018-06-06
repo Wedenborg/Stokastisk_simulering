@@ -11,37 +11,30 @@
 
  traffic =1/8
  ServiceUnits = 10
-
+ # beta =4.097560976
+ # traffic = beta
 
 
 # CustomerSimulation = function(traffic,ServiceUnits){
   # Generate U
   
-  N.iter = 320000
-  X = vector('numeric', N.iter)
-  U = vector('numeric', N.iter)
-  M = 10^8
-  a = 57
-  c = 1
-  X[1]=3
-  for ( i in 1:N.iter){
-    X[i+1]=(a*X[i]+c)%%M
-    U[i+1]=X[i]/M
-  }
-  U = U[U!=0]
+
   
   lambda = traffic
   X_service = -log(U)/lambda
-  X_service = X_service[is.finite(X_service)]
-  X_service = X_service[!is.na(X_service)]
+  
+  lambda = 1
+  X_customer = -log(U)/lambda
+
   
   
   ######################
   #Choose your distribution
   
   ## Exponential
-  # lambda = 1
-  # X_customer = -log(U)/lambda
+  lambda = 1
+  X_customer = -log(U)/lambda
+
   
   # ## Erlang
   # lambda = 1
@@ -56,23 +49,44 @@
   # }
   
   # ## Hyper exponential
-#   lambda1 = 0.8333
-#   lambda2 = 5.0
-#   prob1 = 0.8
-#   prob2 = 0.2
-# 
-#   X_customer = prob1*(-log(U)/lambda1)+prob2*(-log(U)/lambda2)
-# #  hist(X_customer)
+  # lambda1 = 0.8333
+  # lambda2 = 5.0
+  # prob1 = 0.8
+  # prob2 = 0.2
+  # 
+  # X_customer = prob1*(-log(U)/lambda1)+prob2*(-log(U)/lambda2)
 
-  # ## Pareto
-  # beta = 1 # Hvad er beta og k??
+
+  ## Pareto
+  # beta = traffic # Hvad er beta og k??
   # k = 2.05
-  # X_customer = beta*(U^(-1/k))
-   
+  # X_service = beta*(U^(-1/k))
+  # Der n??r ikke at blive blockeret nogle
+  
+  
+  ## Constant service time 
+   # X_service = c(rep(8, length(U)))
+  
+  # ## Normal dist
+  # TT = vector('numeric', length(U))
+  # TTT = vector('numeric', length(U))
+  # 
+  # for ( i in 1:length(U)){
+  #   TT[i] = (-2*log(U[i]))^(1/2)*cos(2*pi*U[i+1])
+  #   TTT[i] = (-2*log(U[i]))^(1/2)*sin(2*pi*U[i+1])
+  # }
+  # X_service = as.vector(rbind(TT,TTT))+8
+  # X_service
+  # 
+  
   ##
   X_customer = X_customer[is.finite(X_customer)]
   X_customer = X_customer[!is.na(X_customer)]
+  X_service = X_service[is.finite(X_service)]
+  X_service = X_service[!is.na(X_service)]
   ##
+  
+  
   
   ###
   
