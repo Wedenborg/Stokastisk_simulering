@@ -1,36 +1,27 @@
 ### Øvelse 6
 
-A = rep(2,10)
-AA = 2
-for (j in 1:length(A)){
+A = rep(8,10)
+AA = 8
+for (j in 0:length(A)){
   A[j] = (AA^j)/factorial(j)
 }
-xx = 1:10
+
+xx = 0:10
 g = (AA^xx/factorial(xx))/sum(A)
 X = vector('numeric', 10)
 X[1] = 1
-N.iter = 10
+N.iter = 10000
 n = 10
 for (i in 2:N.iter){
-  X[-i]=x
-  h = sample(c(0,1),1,replace = TRUE, prob = c(0.5,0.5))
-  if (h == 1){
-    if (x == 10){
-      Y = 1
-    } else {
-      Y = x+1
-    }
-  } else {
-    if (x == 1){
-      Y = 10
-    } else {
-      Y = x+1
-    }
-  }
-  if (g[Y]>=g[x]){
+  x = X[i-1]
+  Y = floor(runif(1,0,11))
+  Y
+  if (g[Y+1]>=g[x+1]){
     X[i]=Y
   } else {
-    X[i]=sample(c(Y,x),1,replace = TRUE, prob = c(g[Y]/g[x],1-g[Y]/g[x]))
+    X[i]=sample(c(Y,x),1,replace = TRUE, prob = c(g[Y+1]/g[x+1],1-g[Y+1]/g[x+1]))
 
   }
 }
+hist(X)
+plot(g)
