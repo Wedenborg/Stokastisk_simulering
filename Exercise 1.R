@@ -117,6 +117,7 @@ A = matrix(
   ncol=6)
 Z = 1/(N-6)*dot(t((R-N*B)),dot(A,(R-N*B)))  # Regner test statistics
 pValue = 1 - pchisq(Z, df=6)  # df er lig med n, fundet i Villy s. 79
+
 ## Kolmogorov-Smirnov test 
 plot(ecdf(X), verticals=TRUE)
 plot(ecdf(U), verticals=TRUE)
@@ -126,14 +127,26 @@ U_ECDF = ecdf(U)
 for ( i in 1:length(U)){
     Dn[i] =  abs(U_ECDF(U[i])-U[i])
 }
-max(Dn)
+Dn = max(Dn)
 
-ks.test(U, 'punif',0,1)
+# Testing significans slide 25 day 2
 
-# regn support
+# All parameters known
+(sqrt(N) + 0.12 + 0.11/sqrt(N))*Dn # = 2.535571, altså er de signifikant forskellige 
+
+# Test for normal distribution 
+(sqrt(N)-0.01 + 0.85/sqrt(N))*Dn # = 2.532467, reject the null hypothesis
+
+# Test for exponential destribution
+(sqrt(N) + 0.26 + 0.5/sqrt(N))*(Dn - 0.2/N) #  = 2.53721, reject the null hypothesis
+
+
+test =ks.test(U, 'punif',0,1)
+
 
 ## Scatter plot
 UScatterHead = head(U,-1)
 UScatterTail = tail(U,-1)
 
 plot(UScatterHead,UScatterTail)
+
