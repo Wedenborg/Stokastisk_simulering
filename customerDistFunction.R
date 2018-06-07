@@ -21,10 +21,10 @@ customerDistFunction = function (customerDist, meanCustomerTime){
       X_customer = -log(U)/lambda
     }
     
-    if (is.finite(X_service) || !is.na(X_service) || X_service >=0){
+    if (is.finite(X_customer) || !is.na(X_customer) || X_customer >=0){
       good = T
     }
   }
   
-  return(X_customer) 
+  return(c(X_customer,U))
 }

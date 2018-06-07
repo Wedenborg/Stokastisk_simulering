@@ -24,6 +24,8 @@ CustomerSimulation = function(customerDist, meanCustomerTime,serviceDist, meanSe
   
   ### Load Functions
   
+  
+  
   setwd("~/Documents/GitHub/Stokastisk_simulering")
   source('serviceDistFunction.R')
   source('customerDistFunction.R')
@@ -58,7 +60,7 @@ CustomerSimulation = function(customerDist, meanCustomerTime,serviceDist, meanSe
       
       if (Next_customer == clock){ # svare event til at der kommer en ny kunde
         Customers = Customers + 1
-        Next_customer = clock +  customerDistFunction (customerDist, meanCustomerTime) # Tiden for hvorn??r n??ste kunde kommer beregnes
+        Next_customer = clock +  customerDistFunction (customerDist, meanCustomerTime)[1] # Tiden for hvorn??r n??ste kunde kommer beregnes
         if (any(S == 0)){ # Hvis der er en tom plads beregnes tiden for hvor langt tid det tager at ekpiderer kunder der tager denne tomme plads
           S[S==0][1] =  serviceDistFunction(serviceDist, meanServiceTime) + clock
         } else { # hvis der ikke er en tom plads bliver kunden blockerer og ender i B
