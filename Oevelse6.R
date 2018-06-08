@@ -36,7 +36,7 @@ jj = 1:5
 g = matrix(NA, 10, 10)
 for (j in 1:10){
   for ( i in 1:10){
-    g[i,j] = (A1^i)/factorial(i)*(A2^i)/factorial(j)
+    g[i,j] = (A1^i)/factorial(i)*(A2^j)/factorial(j)
   }
 }
 x =c(1,1)
