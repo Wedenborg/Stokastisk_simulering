@@ -128,12 +128,12 @@ plot(g)
 ######### abr dim func
 abrmarkov = function(dimension,callType,X0,n){
   
-  # dimension = 4
-  # callType = c(4,4,4,4)
-  # dimension = 4
-  # X0 =c(3,3,3,3)
-  # n =10
-  # 
+  dimension = 2
+  callType = c(4,4)
+  dimension = 2
+  X0 =c(3,3)
+  n =10
+
   gFunction = function(cord,callType,dimension){
     
     g = 1
