@@ -73,7 +73,7 @@ chisq.test(densityX,c(g)) # p-value = 0.2504
 plot(g)
 
 
-######### GIBBS
+######### Co-ordinatewise
 A1 = 4
 A2 = 4
 ii = 1:5
@@ -81,7 +81,7 @@ jj = 1:5
 g = matrix(NA, 10, 10)
 for (j in 1:10){
   for ( i in 1:10){
-    g[i,j] = (A1^i)/factorial(i)*(A2^i)/factorial(j)
+    g[i,j] = (A1^i)/factorial(i)*(A2^j)/factorial(j)
   }
 }
 x =c(1,1)
@@ -125,25 +125,80 @@ chisq.test(densityX,c(g)) # p-value = 0.2504
 plot(g)
 
 
+######### GIBBS
+A1 = 4
+A2 = 4
+ii = 1:5
+jj = 1:5
+g = matrix(NA, 10, 10)
+for (j in 1:10){
+  for ( i in 1:10){
+    g[i,j] = (A1^i)/factorial(i)*(A2^j)/factorial(j)
+  }
+}
+x =c(1,1)
+X = matrix(x,1, 2)
+N.iter = 10000
+n = 10
+for (i in 2:N.iter){
+  good = FALSE
+  while (good == FALSE){
+    Y = floor(runif(2,0,11))
+    Y
+    if (g[Y+1][1]>=g[x+1][1]){
+      x[1]=Y[1]
+    } else {
+      x[1]=x[1]
+      }
+    if (g[Y+1][2]>=g[x+1][2]){
+      x[2]=Y[2]
+    } else {
+      x[2]=x[2]
+    }
+    X = rbind(X,x)
+    if (dim(X)[1]>3 && x == X[i-1,] && x==X[i-2,] && x==X[i-3,]){
+      X = head(X,-2)
+      print('hel')
+      good = TRUE
+    }
+  }
+}
+densityX = vector()
+
+for (i in 1:10){
+  for (j in 1:10){
+    densityX = c(densityX,length(X[X==c(i,j)]))
+  }
+}
+densityX=densityX/N.iter
+
+# dev.new()
+hist(X, freq = FALSE)
+chisq.test(densityX,c(g)) # p-value = 0.2504
+plot(g)
+
+
+
+
 ######### abr dim func
 abrmarkov = function(dimension,callType,X0,n){
-  
+
   # dimension = 4
   # callType = c(4,4,4,4)
   # dimension = 4
   # X0 =c(3,3,3,3)
   # n =10
-  # 
+  #
   gFunction = function(cord,callType,dimension){
-    
+
     g = 1
     for (i in 1:dimension){
     g = g*(callType[i]^(cord[i]))/factorial(cord[i])
-    
+
     }
     return(g)
   }
-  
+
   x = X0
   X = matrix(X,1, length(x))
   N.iter = 10000
@@ -160,13 +215,13 @@ abrmarkov = function(dimension,callType,X0,n){
     }
     X = rbind(X,x)
   }
-  
+
   densityX = vector()
-  
-  
+
+
   result = X
   return(result)
-  
+
 }
 
 
