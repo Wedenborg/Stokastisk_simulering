@@ -18,10 +18,10 @@ costfunk = function(input,X){
 
 
 annealingfunk = function(k, X,input){
-  k = 1
   N = 10
   sti = matrix(X,1,length(X))
   for (i in 1:N){
+    k = i
     X_trim = tail(head(X,-1),-1)
     ombyt = sample(2:(length(X_trim)+1), size = 2,replace = FALSE, prob = NULL )
     ombyt
@@ -41,7 +41,3 @@ annealingfunk = function(k, X,input){
   return(sti)
 }
 
-
-# for (i in 1:10){
-#   annealingfunk(i,X,input)
-#   }

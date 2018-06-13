@@ -14,7 +14,7 @@ hist(X_exp)
 ###Pareto
 U = runif(10000,0,1)
 beta = 1
-k = 4
+k = 2.05
 X_par = beta*(U^(-1/k))
 X_par = X_par[is.finite(X_par)]
 X_par = X_par[!is.na(X_par)]
@@ -23,11 +23,11 @@ hist(X_par)
 
 ## Sammenling mean og var
 ### med udregnet forventet værdi og var
-mean(X_par)
-var(X_par)
-E = beta*(k/(k-1))
+mean(X_par) #1.33
+var(X_par)  # 0.22
+E = beta*(k/(k-1)) #1.33
 E
-vari = beta^2*k/((k-1)^2*(k-2))
+vari = beta^2*k/((k-1)^2*(k-2)) #0.22
 vari
 
 # Mean og forventet mean er n??sten ens
@@ -100,16 +100,16 @@ Conf = matrix(
 
 for (i in 1:100){
   b = a+10
-  sample = TFinal[a:b]
+  sample = X_norm[a:b]
   a= i*10
   n = length(sample)
 
+  Conf[i,2] = mean(sample) + qt(0.975, df =n-1) * sd(sample) / sqrt(n)
 
   Conf[i,1] = mean(sample) - qt(0.975, df =n-1) * sd(sample) / sqrt(n)
-  Conf[i,2] = mean(sample) + qt(0.975, df =n-1) * sd(sample) / sqrt(n)
 }
 
-plot(Conf[,1],col = 'red', type='l' , ylim=c(-1.5,1.5))
+plot(Conf[,1],col = 'red', type='l' , ylim=c(0,1.5))
 lines(Conf[,2],col = 'blue')
 
 #   Conf aendre sig meget men for der meste er 0 indenfor.

@@ -11,7 +11,7 @@ p = c(7/48,5/48,1/8,1/16,1/4,5/16)
 X_crude = vector('numeric',6)
 p1 = sum(p[1])
 p2 = sum(p[1:2])
-p3= sum(p[1:3])
+p3 = sum(p[1:3])
 p4 = sum(p[1:4])
 p5 = sum(p[1:5])
 p6 = sum(p[1:6])
@@ -33,6 +33,8 @@ for ( i in 1:length(U)){
   }
 }
 hist(X_crude)
+
+table(X_crude)
 # regn de funde % ud
 
 ## Alias method
@@ -86,14 +88,13 @@ for ( i in 1:N.iter){
 
 hist(X_alias)
 # Rejection method
-
+U=runif(10000,0,1)
 X = vector()
 Y = ceiling(runif(10000,0,6))
 U = runif(10000,0,1)
-
+p = c(7/48,5/48,1/8,1/16,1/4,5/16)
 q = c(1/6,1/6,1/6,1/6,1/6,1/6)
 C = max (p/q)
-
 for (i in 1:10000){
   J = Y[i]
   if (U[i] < p[J]/(q[J]*C)){
